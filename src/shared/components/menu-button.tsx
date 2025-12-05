@@ -40,7 +40,9 @@ function MenuButton({
     (acc, option) => {
       const hasDefault = defaultChecks?.find((value) => option.value === value);
       acc[getKey(option.value)] =
-        !!hasDefault || (!defaultChecks && option.defaultChecked) || false;
+        !!hasDefault ||
+        (!defaultChecks?.length && option.defaultChecked) ||
+        false;
       return acc;
     },
     {},

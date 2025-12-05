@@ -13,6 +13,7 @@ import SummaryCard from '@/modules/movements/components/summary-card';
 import AnimatedLabel from '@/shared/components/animated-label';
 import Drawer from '@/shared/components/drawer';
 import Voucher from '@/modules/movements/components/voucher';
+import Pagination from '@/shared/components/pagination';
 
 export default function Home() {
   const {
@@ -20,13 +21,17 @@ export default function Home() {
     selectedTab,
     tabs,
     filteredMovements,
+    paginatedData,
     filters: selectedFilters,
     selectedMovement,
+    notFoundMessage: { icon: NotFoundIcon, message: notFoundMessage },
+    currentPage,
     handleTabChange,
     handleConfirmFilters,
     handleSearchChange,
     handleRowClicked,
     handleCloseDrawer,
+    handleChangePage,
   } = useMovementsPage();
   return (
     <>
@@ -46,7 +51,7 @@ export default function Home() {
             </div>
           </aside>
         </section>
-        <section className="h-full">
+        <section className="flex flex-col items-end h-full gap-4">
           <Card className="w-full h-full overflow-hidden min-h-[40rem]">
             <CardHeader>
               Tus ventas de{' '}
@@ -62,14 +67,28 @@ export default function Home() {
             />
             <div className="h-[calc(100%-7rem)] overflow-y-hidden">
               <div className="relative w-full h-full overflow-x-auto">
-                <MovementsTable
-                  className="absolute border-collapse w-max md:w-full"
-                  movements={filteredMovements}
-                  onRowClick={handleRowClicked}
-                />
+                {filteredMovements.length > 0 ? (
+                  <MovementsTable
+                    className="absolute border-collapse w-max md:w-full"
+                    movements={paginatedData}
+                    onRowClick={handleRowClicked}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center h-full gap-4 px-4">
+                    <NotFoundIcon size={48} className="text-secondary-600" />
+                    <p className="font-semibold text-center max-w-96">
+                      {notFoundMessage}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </Card>
+          <Pagination
+            itemsCount={filteredMovements.length}
+            currentPage={currentPage}
+            onPageChange={handleChangePage}
+          />
         </section>
       </section>
       <Drawer open={!!selectedMovement} onClose={handleCloseDrawer}>

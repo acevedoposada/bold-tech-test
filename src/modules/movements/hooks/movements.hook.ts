@@ -1,13 +1,17 @@
 import { ChangeEvent, useMemo, useState } from 'react';
-import dayjs from '@lib/dayjs';
+import { BsEmojiTear } from 'react-icons/bs';
+import { LuSearchX } from 'react-icons/lu';
 import _ from 'lodash';
 
 import { useMovementsStore } from '@/shared/store/movements.store';
 import { SalesType } from '@/shared/constants/financials';
-import { useDebounce } from '@/shared/lib/debounce';
 import { Transaction } from '@/shared/types/movements';
+import { useDebounce } from '@/shared/lib/debounce';
+import dayjs from '@lib/dayjs';
+import { DEFAULT_PAGE_SIZE } from '@/shared/constants/common';
 
 const useMovementsPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedMovement, setSelectedMovement] = useState<Transaction | null>(
     null,
   );
@@ -43,6 +47,30 @@ const useMovementsPage = () => {
     );
   }, [filters, movements, searchTerm]);
 
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * DEFAULT_PAGE_SIZE;
+    const endIndex = startIndex + DEFAULT_PAGE_SIZE;
+    return filteredMovements.slice(startIndex, endIndex);
+  }, [currentPage, filteredMovements]);
+
+  const notFoundMessage = useMemo(() => {
+    if (
+      filteredMovements.length === 0 &&
+      !searchTerm.trim().length &&
+      !filters.length
+    ) {
+      return {
+        icon: BsEmojiTear,
+        message:
+          'Aún no tienes movimientos. Empieza a usar tus productos Bold y disfruta una nueva forma de mover tu plata',
+      };
+    }
+    return {
+      icon: LuSearchX,
+      message: 'No encontramos nada que coincida con tus criterios de búsqueda',
+    };
+  }, [searchTerm, filteredMovements]);
+
   const tabText = useMemo(() => tabs[selectedTab], [selectedTab]);
 
   const handleSearchChange = useDebounce(
@@ -63,19 +91,27 @@ const useMovementsPage = () => {
 
   const handleCloseDrawer = () => setSelectedMovement(null);
 
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return {
     selectedTab,
     tabText,
     tabs,
     filteredMovements,
+    paginatedData,
     movements,
     filters,
     selectedMovement,
+    notFoundMessage,
+    currentPage,
     handleRowClicked,
     handleTabChange,
     handleConfirmFilters,
     handleSearchChange,
     handleCloseDrawer,
+    handleChangePage,
   };
 };
 

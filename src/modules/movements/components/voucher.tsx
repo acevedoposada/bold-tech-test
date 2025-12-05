@@ -29,11 +29,15 @@ const labels = {
 
 const appearAnimation = {
   hidden: { x: 25, opacity: 0 },
-  shown: (custom: number) => ({ x: 0, opacity: 1, transition: { delay: (custom * 0.1) + 0.3 } })
-}
+  shown: (custom: number) => ({
+    x: 0,
+    opacity: 1,
+    transition: { delay: custom * 0.1 + 0.3 },
+  }),
+};
 
 function Voucher({ transaction }: VoucherProps) {
-  const [amountValue, setAmountValue] = useState(0)
+  const [amountValue, setAmountValue] = useState(0);
   const isSuccesfully = transaction.status === TransactionStatus.SUCCESSFUL;
   const Icon = motion.create(isSuccesfully ? HiCheckCircle : HiXCircle);
 
@@ -64,7 +68,7 @@ function Voucher({ transaction }: VoucherProps) {
           <span className="text-sm font-bold">
             {
               labels.salesType[
-              transaction.salesType as keyof typeof labels.salesType
+                transaction.salesType as keyof typeof labels.salesType
               ]
             }
           </span>
@@ -84,26 +88,48 @@ function Voucher({ transaction }: VoucherProps) {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setAmountValue(transaction.amount)
-      clearTimeout(timeoutId)
-    }, 300)
-  }, [])
+      setAmountValue(transaction.amount);
+      clearTimeout(timeoutId);
+    }, 300);
+  }, []);
 
   return (
-    <motion.div className="px-4 pb-20 lg:pb-0 lg:px-8" initial="hidden" animate="shown" >
+    <motion.div
+      className="px-4 pb-20 lg:pb-0 lg:px-8"
+      initial="hidden"
+      animate="shown"
+    >
       <div className="grid gap-2 py-16 text-center">
         <Icon
           key={transaction.id}
           initial={{ scale: 0 }}
-          animate={{ scale: 1, transition: { type: 'spring', stiffness: 300, delay: 0.3, duration: 0.3 } }}
+          animate={{
+            scale: 1,
+            transition: {
+              type: 'spring',
+              stiffness: 300,
+              delay: 0.3,
+              duration: 0.3,
+            },
+          }}
           size={48}
           className={cn('mx-auto', {
             'text-green-300': isSuccesfully,
             'text-red-400': !isSuccesfully,
           })}
         />
-        <motion.p custom={0} variants={appearAnimation} className="text-xl font-bold">{labels.title[transaction.status]}</motion.p>
-        <motion.h5 custom={1} variants={appearAnimation} className="my-1 text-4xl font-semibold text-primary">
+        <motion.p
+          custom={0}
+          variants={appearAnimation}
+          className="text-xl font-bold"
+        >
+          {labels.title[transaction.status]}
+        </motion.p>
+        <motion.h5
+          custom={1}
+          variants={appearAnimation}
+          className="my-1 text-4xl font-semibold text-primary"
+        >
           <NumberFlow
             value={amountValue}
             locales="es-CO"
@@ -114,7 +140,11 @@ function Voucher({ transaction }: VoucherProps) {
             }}
           />
         </motion.h5>
-        <motion.p custom={2} variants={appearAnimation} className="text-sm lg:text-base">
+        <motion.p
+          custom={2}
+          variants={appearAnimation}
+          className="text-sm lg:text-base"
+        >
           {dayjs(transaction.createdAt).format('DD/MM/YYYY - HH:mm:ss')}
         </motion.p>
       </div>

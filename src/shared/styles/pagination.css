@@ -1,0 +1,17 @@
+@reference "../../app/globals.css";
+
+.pagination__control {
+  @apply flex items-center justify-center h-10 gap-2 p-2 leading-none text-center transition-all duration-300 border border-transparent rounded-full cursor-pointer aspect-square min-h-10 flex-nowrap whitespace-nowrap;
+  @apply hover:bg-indigo-300/20;
+  @apply disabled:cursor-default disabled:opacity-60 disabled:hover:bg-transparent;
+}
+
+.pagination__control__bullet {
+  @apply font-semibold bg-primary-100 text-primary;
+  @apply hover:bg-primary-300;
+}
+
+.pagination__control--active {
+  @apply bg-secondary-300 text-secondary-900;
+  @apply hover:bg-secondary-300;
+}
