@@ -1,9 +1,9 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { IconType } from 'react-icons';
 import { cn } from '../lib/utils';
 
 interface FormFieldProps extends DetailedHTMLProps<
-  HTMLAttributes<HTMLInputElement>,
+  InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > {
   icon?: IconType;

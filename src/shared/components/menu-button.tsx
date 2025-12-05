@@ -1,8 +1,9 @@
 'use client';
+import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react';
 import { VscSettings } from 'react-icons/vsc';
 import { IoClose } from 'react-icons/io5';
-import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useFormik } from 'formik';
 import Button from './button';
 import { cn } from '../lib/utils';
 import Checkbox from './checkbox';
@@ -10,6 +11,7 @@ import Checkbox from './checkbox';
 interface Value {
   label: string;
   value: string | number;
+  defaultChecked?: boolean;
 }
 
 interface MenuButtonProps extends Omit<HTMLMotionProps<'button'>, 'values'> {
@@ -17,7 +19,7 @@ interface MenuButtonProps extends Omit<HTMLMotionProps<'button'>, 'values'> {
   values: Value[];
   buttonLabel?: string;
   onClose?: () => void;
-  onConfirm?: (values?: (string | number)[]) => void;
+  onConfirm?: (values: string[]) => void;
 }
 
 function MenuButton({
@@ -31,12 +33,44 @@ function MenuButton({
 }: MenuButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => setIsOpen((prev) => !prev);
+  const getKey = (value: string | number) => String(value);
 
-  const handleClickBtn = () => {
-    setIsOpen(false);
-    onConfirm?.([]);
-  };
+  const initialValues = useMemo(
+    () =>
+      values.reduce<Record<string, boolean>>((acc, option) => {
+        acc[getKey(option.value)] = option.defaultChecked || false;
+        return acc;
+      }, {}),
+    [values],
+  );
+
+  const {
+    values: formValues,
+    handleChange,
+    isValid,
+    handleSubmit,
+  } = useFormik({
+    initialValues,
+    validate: (values) => {
+      const errors: Record<string, string> = {};
+      const isOneSelected = Object.values(values).some((val) => val === true);
+
+      if (!isOneSelected) {
+        errors['general'] = 'Debes seleccionar al menos una opción';
+      }
+      return errors;
+    },
+    validateOnMount: true,
+    validateOnChange: true,
+    onSubmit(formValues) {
+      setIsOpen(false);
+      onConfirm?.(
+        Object.keys(formValues).filter((option) => formValues[option]),
+      );
+    },
+  });
+
+  const toggle = () => setIsOpen((prev) => !prev);
 
   const handleClose = () => {
     toggle();
@@ -82,26 +116,37 @@ function MenuButton({
                 {title}
               </motion.p>
               <ul className="grid gap-2 mb-4">
-                {values.map((element, idx) => (
-                  <li key={element.value} className="flex items-center whitespace-nowrap">
-                    <label htmlFor={`checkbox-${idx}`}>
-                      <Checkbox
-                        id={`checkbox-${idx}`}
-                        value={element.value}
-                        className='mr-4'
-                        size='sm'
-                      />
-                      <span className="font-medium text-primary">
-                        {element.label}
-                      </span>
-                    </label>
-                  </li>
-                ))}
+                {values.map((option, idx) => {
+                  const key = getKey(option.value);
+                  return (
+                    <li
+                      key={key}
+                      className="flex items-center whitespace-nowrap"
+                    >
+                      <label htmlFor={`checkbox-${key}`}>
+                        <Checkbox
+                          id={`checkbox-${key}`}
+                          name={key}
+                          value={option.value}
+                          checked={formValues[key]}
+                          className="mr-4"
+                          size="sm"
+                          onChange={handleChange}
+                        />
+                        <span className="font-medium text-primary">
+                          {option.label}
+                        </span>
+                      </label>
+                    </li>
+                  );
+                })}
               </ul>
               <Button
                 fullWidth
-                onClick={handleClickBtn}
+                onClick={handleSubmit as any}
                 data-testid="confirm-btn"
+                disabled={!isValid}
+                type="button"
               >
                 {buttonLabel}
               </Button>

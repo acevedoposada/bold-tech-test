@@ -6,6 +6,7 @@ type ButtonProps = CommonProps &
   DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
     disabled?: boolean;
     fullWidth?: boolean;
+    type?: 'submit' | 'reset' | 'button';
   };
 
 function Button({ children, className, fullWidth, ...props }: ButtonProps) {

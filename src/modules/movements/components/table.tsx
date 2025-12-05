@@ -26,7 +26,7 @@ function MovementsTable({ className, movements }: MovementsTableProps) {
           >
             <td>
               <p className="flex items-center gap-4 text-primary">
-                <span className='inline-block'>
+                <span className="inline-block">
                   {movement.salesType === SalesType.TERMINAL ? (
                     <i className="text-xl icon-terminal"></i>
                   ) : (
