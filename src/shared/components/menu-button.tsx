@@ -49,20 +49,20 @@ function MenuButton({
   const initialValues: Record<string, boolean | string> =
     inputType === MenuButtonInputType.CHECKBOX && Array.isArray(checkedDefalt)
       ? values.reduce<Record<string, boolean>>((acc, option) => {
-        const hasDefault = checkedDefalt?.find(
-          (value) => option.value === value,
-        );
-        acc[getKey(option.value)] =
-          !!hasDefault ||
-          (!checkedDefalt?.length && option.defaultChecked) ||
-          false;
-        return acc;
-      }, {})
+          const hasDefault = checkedDefalt?.find(
+            (value) => option.value === value,
+          );
+          acc[getKey(option.value)] =
+            !!hasDefault ||
+            (!checkedDefalt?.length && option.defaultChecked) ||
+            false;
+          return acc;
+        }, {})
       : {
-        radio: Array.isArray(checkedDefalt)
-          ? ''
-          : String(checkedDefalt) || '',
-      };
+          radio: Array.isArray(checkedDefalt)
+            ? ''
+            : String(checkedDefalt) || '',
+        };
 
   const {
     values: formValues,

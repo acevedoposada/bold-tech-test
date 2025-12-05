@@ -27,7 +27,8 @@ function Pagination({
     itemsCount,
   });
 
-  const itemsPerPage = itemsCount < DEFAULT_PAGE_SIZE ? itemsCount : DEFAULT_PAGE_SIZE;
+  const itemsPerPage =
+    itemsCount < DEFAULT_PAGE_SIZE ? itemsCount : DEFAULT_PAGE_SIZE;
 
   const handleBulletClick =
     (page: number | string) => (event: MouseEvent<Element>) => {

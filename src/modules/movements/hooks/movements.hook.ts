@@ -74,7 +74,10 @@ const useMovementsPage = () => {
   const tabText = useMemo(() => tabs[selectedTab], [selectedTab, tabs]);
 
   const handleSearchChange = useDebounce(
-    (event: ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value),
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(event.target.value);
+      setCurrentPage(1);
+    },
   );
 
   const handleTabChange = (value: number | string) => {
@@ -82,6 +85,7 @@ const useMovementsPage = () => {
   };
 
   const handleConfirmFilters = (filters: string[]) => {
+    setCurrentPage(1);
     if (filters.length > 0) applyFilter(filters[0]);
   };
 
