@@ -1,0 +1,221 @@
+@font-face {
+  font-family: 'custom-icons';
+  src: url('fonts/custom-icons.eot?k1ysfj');
+  src:
+    url('fonts/custom-icons.eot?k1ysfj#iefix') format('embedded-opentype'),
+    url('fonts/custom-icons.ttf?k1ysfj') format('truetype'),
+    url('fonts/custom-icons.woff?k1ysfj') format('woff'),
+    url('fonts/custom-icons.svg?k1ysfj#custom-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*='icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'custom-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pse .path1:before {
+  content: '\e903';
+  color: rgb(42, 104, 172);
+}
+
+.icon-pse .path2:before {
+  content: '\e904';
+  margin-left: -1em;
+  color: rgb(253, 185, 49);
+}
+
+.icon-pse .path3:before {
+  content: '\e905';
+  margin-left: -1em;
+  color: rgb(253, 185, 49);
+}
+
+.icon-pse .path4:before {
+  content: '\e906';
+  margin-left: -1em;
+  color: rgb(253, 185, 49);
+}
+
+.icon-pse .path5:before {
+  content: '\e907';
+  margin-left: -1em;
+  color: rgb(253, 185, 49);
+}
+
+.icon-bancolombia:before {
+  content: '\e902';
+}
+
+.icon-daviplata .path1:before {
+  content: '\e928';
+  color: rgb(236, 28, 38);
+}
+
+.icon-daviplata .path2:before {
+  content: '\e929';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path3:before {
+  content: '\e92a';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path4:before {
+  content: '\e92b';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path5:before {
+  content: '\e92c';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path6:before {
+  content: '\e92d';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path7:before {
+  content: '\e92e';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path8:before {
+  content: '\e92f';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path9:before {
+  content: '\e930';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-daviplata .path10:before {
+  content: '\e931';
+  margin-left: -1.6396484375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-nequi .path1:before {
+  content: '\e932';
+  color: rgb(202, 0, 128);
+}
+
+.icon-nequi .path2:before {
+  content: '\e933';
+  margin-left: -2.5263671875em;
+  color: rgb(32, 0, 32);
+}
+
+.icon-nequi .path3:before {
+  content: '\e934';
+  margin-left: -2.5263671875em;
+  color: rgb(32, 0, 32);
+}
+
+.icon-nequi .path4:before {
+  content: '\e935';
+  margin-left: -2.5263671875em;
+  color: rgb(32, 0, 32);
+}
+
+.icon-nequi .path5:before {
+  content: '\e936';
+  margin-left: -2.5263671875em;
+  color: rgb(32, 0, 32);
+}
+
+.icon-nequi .path6:before {
+  content: '\e937';
+  margin-left: -2.5263671875em;
+  color: rgb(32, 0, 32);
+}
+
+.icon-visa .path1:before {
+  content: '\e938';
+  color: rgb(14, 69, 149);
+}
+
+.icon-visa .path2:before {
+  content: '\e939';
+  margin-left: -1.5927734375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-visa .path3:before {
+  content: '\e93a';
+  margin-left: -1.5927734375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-visa .path4:before {
+  content: '\e93b';
+  margin-left: -1.5927734375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-visa .path5:before {
+  content: '\e93c';
+  margin-left: -1.5927734375em;
+  color: rgb(255, 255, 255);
+}
+
+.icon-mastercard .path1:before {
+  content: '\e93d';
+  color: rgb(255, 255, 255);
+}
+
+.icon-mastercard .path2:before {
+  content: '\e93e';
+  margin-left: -1em;
+  color: rgb(35, 31, 32);
+}
+
+.icon-mastercard .path3:before {
+  content: '\e93f';
+  margin-left: -1em;
+  color: rgb(255, 95, 0);
+}
+
+.icon-mastercard .path4:before {
+  content: '\e940';
+  margin-left: -1em;
+  color: rgb(235, 0, 27);
+}
+
+.icon-mastercard .path5:before {
+  content: '\e941';
+  margin-left: -1em;
+  color: rgb(247, 158, 27);
+}
+
+.icon-terminal:before {
+  content: '\e900';
+}
+
+.icon-info:before {
+  content: '\e901';
+}

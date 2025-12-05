@@ -1,65 +1,76 @@
-import Image from "next/image";
+'use client';
+
+import { IoSearchSharp } from 'react-icons/io5';
+
+import { filters } from '@/shared/constants/filters';
+import Card, { CardHeader, CardBody } from '@/shared/components/card';
+import MenuButton from '@/shared/components/menu-button';
+import Tabs from '@/shared/components/tabs';
+import Tooltip from '@/shared/components/tooltip';
+import useMovementsPage from '@/modules/movements/hooks/movements.hook';
+import FormField from '@/shared/components/form-field';
+import MovementsTable from '@/modules/movements/components/table';
+import Table, { TableHeader } from '@/shared/components/table';
+import { tableHeaders } from '@/modules/movements/constants/table-movements';
 
 export default function Home() {
+  const {
+    tabText,
+    selectedTab,
+    tabs,
+    movements,
+    loadingData,
+    handleTabChange,
+  } = useMovementsPage();
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <section className="container grid min-h-full gap-4 py-8 lg:py-14 grid-rows-[auto_1fr]">
+      <section className="grid gap-4 lg:grid-cols-3">
+        <Card>
+          <CardHeader className="flex items-center justify-between">
+            Total de ventas de {tabText}
+            <Tooltip
+              title={`Esta es la sumatoria de las ventas de ${tabText}`}
+              clickable
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              <i className="text-xl icon-info" />
+            </Tooltip>
+          </CardHeader>
+          <CardBody className="pt-5 text-center">
+            <p className="mb-3 text-2xl font-bold brand-gradient text-gradient">
+              $ 9'123.950
+            </p>
+            <p>27 de Junio 2024</p>
+          </CardBody>
+        </Card>
+        <aside className="grid gap-4 lg:col-span-2 grid-rows-[auto_1fr]">
+          <Tabs value={selectedTab} tabs={tabs} onChange={handleTabChange} />
+          <div className="flex items-start justify-end">
+            <MenuButton
+              title="Filtrar"
+              values={filters}
+              buttonLabel="Aplicar"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          </div>
+        </aside>
+      </section>
+      <section className="h-full">
+        <Card className="w-full h-full overflow-hidden min-h-[40rem]">
+          <CardHeader>Tus ventas de {tabText.toLowerCase()}</CardHeader>
+          <FormField
+            placeholder="Buscar"
+            icon={IoSearchSharp}
+            className="border-b border-brand-gray-dark/30"
+          />
+          <div className="h-[calc(100%-7rem)] overflow-y-hidden">
+            <div className="relative w-full h-full overflow-x-auto">
+              <MovementsTable
+                className="absolute border-collapse w-max md:w-full"
+                movements={movements}
+              />
+            </div>
+          </div>
+        </Card>
+      </section>
+    </section>
   );
 }

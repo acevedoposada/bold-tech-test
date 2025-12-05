@@ -1,0 +1,9 @@
+@reference "../../app/globals.css";
+
+.brand-gradient {
+  @apply bg-linear-to-r from-primary to-secondary;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent;
+}

@@ -1,0 +1,19 @@
+@reference "../../app/globals.css";
+
+.table__body {
+  & tr {
+    @apply border-l-3 border-brand-gray-dark/50;
+
+    &:nth-child(odd) {
+      @apply border-primary;
+    }
+
+    &:not(:last-child) {
+      @apply border-b border-b-brand-gray-dark/20;
+    }
+  }
+
+  & td {
+    @apply px-4 py-2;
+  }
+}

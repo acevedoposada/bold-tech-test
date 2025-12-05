@@ -1,0 +1,15 @@
+@reference "../../app/globals.css";
+
+.logo-mask {
+  @apply w-full h-full;
+  mask: url('/bold.svg');
+  mask-position: 40% 40%;
+  mask-repeat: no-repeat;
+  mask-size: 1000%;
+}
+
+@media (width < 1024px) {
+  .logo-mask {
+    mask-size: 1100vh;
+  }
+}
