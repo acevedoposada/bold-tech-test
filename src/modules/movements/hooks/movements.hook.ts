@@ -1,22 +1,23 @@
-import { ChangeEvent, useLayoutEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import dayjs from '@lib/dayjs';
 import _ from 'lodash';
 
-import { useLayoutStore } from '@/shared/store/layout.store';
 import { useMovementsStore } from '@/shared/store/movements.store';
 import { SalesType } from '@/shared/constants/financials';
 import { useDebounce } from '@/shared/lib/debounce';
 import { Transaction } from '@/shared/types/movements';
 
 const useMovementsPage = () => {
-  const [selectedTab, setSelectedTab] = useState(2);
+  const [selectedMovement, setSelectedMovement] = useState<Transaction | null>(
+    null,
+  );
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const { setFirstLoadFalsy } = useLayoutStore();
   const movements = useMovementsStore((state) => state.movements);
   const filters = useMovementsStore((state) => state.filters);
-  const fetchMovements = useMovementsStore((state) => state.fetchMovements);
+  const selectedTab = useMovementsStore((state) => state.timeFilter);
   const applyFilters = useMovementsStore((state) => state.applyFilters);
+  const applyTimeFilter = useMovementsStore((state) => state.applyTimeFilter);
 
   const tabs = useMemo(
     () => ['Hoy', 'Esta semana', _.capitalize(dayjs().format('MMMM'))],
@@ -49,29 +50,32 @@ const useMovementsPage = () => {
   );
 
   const handleTabChange = (value: number | string) => {
-    setSelectedTab(value as number);
+    applyTimeFilter(value as number);
   };
 
   const handleConfirmFilters = (filters: string[]) => {
     applyFilters(filters);
   };
 
-  useLayoutEffect(() => {
-    (async () => {
-      await fetchMovements();
-      setFirstLoadFalsy();
-    })();
-  }, []);
+  const handleRowClicked = (element: Transaction) => {
+    setSelectedMovement(element);
+  };
+
+  const handleCloseDrawer = () => setSelectedMovement(null);
 
   return {
     selectedTab,
     tabText,
     tabs,
-    movements,
     filteredMovements,
+    movements,
+    filters,
+    selectedMovement,
+    handleRowClicked,
     handleTabChange,
     handleConfirmFilters,
     handleSearchChange,
+    handleCloseDrawer,
   };
 };
 

@@ -10,6 +10,7 @@ import '@styles/gradients.css';
 import { Breakpoints } from '../constants/breakpoints';
 import Logo from './logo';
 import { cn } from '../lib/utils';
+import Link from 'next/link';
 
 const appearVariantsAnimations = {
   hidden: { height: 112 },
@@ -58,7 +59,9 @@ function Header() {
           }}
         >
           <div className="flex items-center justify-between w-full lg:w-auto">
-            <Logo className="w-28 h-28 lg:w-42" fill="white" />
+            <Link href="/">
+              <Logo className="w-28 h-28 lg:w-42" fill="white" />
+            </Link>
             <button
               data-testid="burger-menu"
               className="grid w-10 h-10 cursor-pointer place-content-center lg:hidden"

@@ -90,7 +90,7 @@ describe('Menu button component', () => {
       const btn = screen.getByTestId('menu-btn');
       await act(() => {
         fireEvent.click(btn);
-      })
+      });
 
       const popover = screen.getByTestId('popover');
       expect(popover).toBeInTheDocument();
@@ -98,11 +98,11 @@ describe('Menu button component', () => {
       const confirmBtn = screen.getByTestId('confirm-btn');
       await act(() => {
         fireEvent.click(confirmBtn);
-      })
+      });
 
       if (hasOnConfirm) {
         expect(confirmFn).toHaveBeenCalledTimes(1);
-        expect(confirmFn).toHaveBeenCalledWith(["2"]);
+        expect(confirmFn).toHaveBeenCalledWith(['2']);
       }
       await waitFor(() => {
         expect(screen.queryByTestId('popover')).not.toBeInTheDocument();

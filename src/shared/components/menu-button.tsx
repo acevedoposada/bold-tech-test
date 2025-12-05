@@ -18,6 +18,7 @@ interface MenuButtonProps extends Omit<HTMLMotionProps<'button'>, 'values'> {
   title: string;
   values: Value[];
   buttonLabel?: string;
+  defaultChecks?: string[];
   onClose?: () => void;
   onConfirm?: (values: string[]) => void;
 }
@@ -26,22 +27,23 @@ function MenuButton({
   title,
   values,
   buttonLabel = 'Confirmar',
+  defaultChecks,
   onClose,
   onConfirm,
   className,
   ...props
 }: MenuButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   const getKey = (value: string | number) => String(value);
 
-  const initialValues = useMemo(
-    () =>
-      values.reduce<Record<string, boolean>>((acc, option) => {
-        acc[getKey(option.value)] = option.defaultChecked || false;
-        return acc;
-      }, {}),
-    [values],
+  const initialValues = values.reduce<Record<string, boolean>>(
+    (acc, option) => {
+      const hasDefault = defaultChecks?.find((value) => option.value === value);
+      acc[getKey(option.value)] =
+        !!hasDefault || (!defaultChecks && option.defaultChecked) || false;
+      return acc;
+    },
+    {},
   );
 
   const {
@@ -54,7 +56,6 @@ function MenuButton({
     validate: (values) => {
       const errors: Record<string, string> = {};
       const isOneSelected = Object.values(values).some((val) => val === true);
-
       if (!isOneSelected) {
         errors['general'] = 'Debes seleccionar al menos una opción';
       }
@@ -62,6 +63,7 @@ function MenuButton({
     },
     validateOnMount: true,
     validateOnChange: true,
+    enableReinitialize: true,
     onSubmit(formValues) {
       setIsOpen(false);
       onConfirm?.(
@@ -116,7 +118,7 @@ function MenuButton({
                 {title}
               </motion.p>
               <ul className="grid gap-2 mb-4">
-                {values.map((option, idx) => {
+                {values.map((option) => {
                   const key = getKey(option.value);
                   return (
                     <li

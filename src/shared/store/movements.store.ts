@@ -3,25 +3,27 @@ import { create } from 'zustand';
 
 import { Transaction } from '../types/movements';
 import { fetchMovementsEffect } from './effect/movements.effect';
-import { SalesType } from '../constants/financials';
 
 interface MovementsState {
   loading: boolean;
   page: number;
   movements: Transaction[];
   filters: string[];
+  timeFilter: number;
   fetchMovements: () => void;
   changePage: (page: number) => void;
   applyFilters: (filters: string[]) => void;
+  applyTimeFilter: (value: number) => void;
 }
 
 export const useMovementsStore = create<MovementsState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       loading: true,
       page: 1,
       movements: [],
       filters: [],
+      timeFilter: 2,
       setLoading(value: boolean) {
         set((state) => ({ ...state, loading: value }));
       },
@@ -36,6 +38,9 @@ export const useMovementsStore = create<MovementsState>()(
       },
       applyFilters(filters: string[]) {
         set((state) => ({ ...state, filters }));
+      },
+      applyTimeFilter(value: number) {
+        set((state) => ({ ...state, timeFilter: value }));
       },
       changePage(page: number) {
         set((state) => ({ ...state, page }));

@@ -6,6 +6,7 @@ import Header from '@/shared/components/header';
 import '@/assets/fonts/custom-icons/style.css';
 import './globals.css';
 import SplashScreen from '@/shared/components/splash-screen';
+import InitializeServices from '@/shared/components/initialize-services';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -32,6 +33,7 @@ export default function RootLayout({
         <Header />
         <main className="h-[calc(100%-7rem)] px-4 lg:px-8">{children}</main>
         <SplashScreen />
+        <InitializeServices />
       </body>
     </html>
   );

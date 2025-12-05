@@ -12,9 +12,14 @@ import PaymentCell from './payment-cell';
 interface MovementsTableProps {
   className?: string;
   movements: Transaction[];
+  onRowClick?: (element: Transaction) => void;
 }
 
-function MovementsTable({ className, movements }: MovementsTableProps) {
+function MovementsTable({
+  className,
+  movements,
+  onRowClick,
+}: MovementsTableProps) {
   return (
     <Table className={className}>
       <TableHeader values={tableHeaders} />
@@ -23,6 +28,7 @@ function MovementsTable({ className, movements }: MovementsTableProps) {
           <tr
             key={movement.id}
             className="h-20 cursor-pointer hover:bg-brand-gray-light/30"
+            onClick={() => onRowClick?.(movement)}
           >
             <td>
               <p className="flex items-center gap-4 text-primary">
