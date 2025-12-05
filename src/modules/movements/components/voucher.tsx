@@ -1,7 +1,8 @@
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 import { GoLink } from 'react-icons/go';
 import { motion } from 'motion/react';
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 
 import { SalesType, TransactionStatus } from '@/shared/constants/financials';
 import { Transaction } from '@/shared/types/movements';
@@ -36,10 +37,13 @@ const appearAnimation = {
   }),
 };
 
+const SuccessIcon = motion.create(HiCheckCircle);
+const ErrorIcon = motion.create(HiXCircle);
+
 function Voucher({ transaction }: VoucherProps) {
   const [amountValue, setAmountValue] = useState(0);
   const isSuccesfully = transaction.status === TransactionStatus.SUCCESSFUL;
-  const Icon = motion.create(isSuccesfully ? HiCheckCircle : HiXCircle);
+  const IconComponent = isSuccesfully ? SuccessIcon : ErrorIcon;
 
   const transactionIcon =
     transaction.salesType === SalesType.TERMINAL ? (
@@ -48,21 +52,47 @@ function Voucher({ transaction }: VoucherProps) {
       <GoLink className="text-primary" />
     );
 
-  const info = useMemo(() => {
-    const data = [
-      ['ID transacción Bold', <p className="font-bold">{transaction.id}</p>],
-      ['Divider'],
-      [
-        'Método de pago',
+  const info: Array<{
+    key: string;
+    label?: string;
+    value?: ReactNode;
+    type?: 'divider';
+  }> = [
+    {
+      key: 'transaction-id',
+      label: 'ID transacción Bold',
+      value: <p className="font-bold">{transaction.id}</p>,
+    },
+    { key: 'divider-top', type: 'divider' },
+    ...(transaction.deduction
+      ? [
+          {
+            key: 'deduction',
+            label: 'Deducción Bold',
+            value: (
+              <p className="text-sm font-bold text-red-400">
+                {formatCurrency(-transaction.deduction)}
+              </p>
+            ),
+          },
+        ]
+      : []),
+    {
+      key: 'payment-method',
+      label: 'Método de pago',
+      value: (
         <PaymentCell
           method={transaction.paymentMethod}
           reference={transaction.transactionReference}
           franchise={transaction.franchise}
           className="justify-end gap-6 text-brand-gray-dark/80"
-        />,
-      ],
-      [
-        'Tipo de pago',
+        />
+      ),
+    },
+    {
+      key: 'payment-type',
+      label: 'Tipo de pago',
+      value: (
         <p className="flex items-center justify-end gap-3">
           {transactionIcon}{' '}
           <span className="text-sm font-bold">
@@ -72,26 +102,18 @@ function Voucher({ transaction }: VoucherProps) {
               ]
             }
           </span>
-        </p>,
-      ],
-    ];
-    if (transaction.deduction) {
-      data.splice(1, 0, [
-        'Deducción Bold',
-        <p className="text-sm font-bold text-red-400">
-          {formatCurrency(-transaction.deduction)}
-        </p>,
-      ]);
-    }
-    return data;
-  }, [transaction.id]);
+        </p>
+      ),
+    },
+  ];
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setAmountValue(transaction.amount);
       clearTimeout(timeoutId);
     }, 300);
-  }, []);
+    return () => clearTimeout(timeoutId);
+  }, [transaction.amount]);
 
   return (
     <motion.div
@@ -100,7 +122,7 @@ function Voucher({ transaction }: VoucherProps) {
       animate="shown"
     >
       <div className="grid gap-2 py-16 text-center">
-        <Icon
+        <IconComponent
           key={transaction.id}
           initial={{ scale: 0 }}
           animate={{
@@ -150,15 +172,15 @@ function Voucher({ transaction }: VoucherProps) {
       </div>
       <motion.table custom={3} variants={appearAnimation} className="w-full">
         <tbody>
-          {info.map(([label, value], idx) =>
-            idx + 1 === info.length - 2 ? (
-              <tr key={idx}>
+          {info.map(({ key, type, label, value }) =>
+            type === 'divider' ? (
+              <tr key={key}>
                 <td colSpan={2} className="py-2">
                   <div className="w-full h-px bg-brand-gray-dark" />
                 </td>
               </tr>
             ) : (
-              <tr key={idx}>
+              <tr key={key}>
                 <td className="py-2 font-medium text-brand-gray-dark/70">
                   {label}
                 </td>

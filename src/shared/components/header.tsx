@@ -35,7 +35,7 @@ function Header() {
     });
     observer.observe(document.body);
     return () => observer.disconnect();
-  }, []);
+  }, [isOpen]);
 
   return (
     <header data-testid="header" className="sticky top-0 z-10 h-28">

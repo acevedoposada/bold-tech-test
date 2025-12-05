@@ -2,11 +2,12 @@
 import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react';
 import { VscSettings } from 'react-icons/vsc';
 import { IoClose } from 'react-icons/io5';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import Button from './button';
 import { cn } from '../lib/utils';
 import Checkbox from './checkbox';
+import Radio from './radio';
 
 interface Value {
   label: string;
@@ -14,11 +15,17 @@ interface Value {
   defaultChecked?: boolean;
 }
 
+enum MenuButtonInputType {
+  CHECKBOX = 'checkbox',
+  RADIO = 'radio',
+}
+
 interface MenuButtonProps extends Omit<HTMLMotionProps<'button'>, 'values'> {
   title: string;
   values: Value[];
   buttonLabel?: string;
-  defaultChecks?: string[];
+  checkedDefalt?: (string | number)[] | (string | number);
+  inputType?: `${MenuButtonInputType}`;
   onClose?: () => void;
   onConfirm?: (values: string[]) => void;
 }
@@ -27,7 +34,8 @@ function MenuButton({
   title,
   values,
   buttonLabel = 'Confirmar',
-  defaultChecks,
+  checkedDefalt,
+  inputType = MenuButtonInputType.CHECKBOX,
   onClose,
   onConfirm,
   className,
@@ -36,17 +44,23 @@ function MenuButton({
   const [isOpen, setIsOpen] = useState(false);
   const getKey = (value: string | number) => String(value);
 
-  const initialValues = values.reduce<Record<string, boolean>>(
-    (acc, option) => {
-      const hasDefault = defaultChecks?.find((value) => option.value === value);
-      acc[getKey(option.value)] =
-        !!hasDefault ||
-        (!defaultChecks?.length && option.defaultChecked) ||
-        false;
-      return acc;
-    },
-    {},
-  );
+  const initialValues: Record<string, boolean | string> =
+    inputType === MenuButtonInputType.CHECKBOX && Array.isArray(checkedDefalt)
+      ? values.reduce<Record<string, boolean>>((acc, option) => {
+          const hasDefault = checkedDefalt?.find(
+            (value) => option.value === value,
+          );
+          acc[getKey(option.value)] =
+            !!hasDefault ||
+            (!checkedDefalt?.length && option.defaultChecked) ||
+            false;
+          return acc;
+        }, {})
+      : {
+          radio: Array.isArray(checkedDefalt)
+            ? ''
+            : String(checkedDefalt) || '',
+        };
 
   const {
     values: formValues,
@@ -57,6 +71,9 @@ function MenuButton({
     initialValues,
     validate: (values) => {
       const errors: Record<string, string> = {};
+      if (values.radio) {
+        return errors;
+      }
       const isOneSelected = Object.values(values).some((val) => val === true);
       if (!isOneSelected) {
         errors['general'] = 'Debes seleccionar al menos una opción';
@@ -68,9 +85,13 @@ function MenuButton({
     enableReinitialize: true,
     onSubmit(formValues) {
       setIsOpen(false);
-      onConfirm?.(
-        Object.keys(formValues).filter((option) => formValues[option]),
-      );
+      let value: string[];
+      if (formValues.radio) {
+        value = [String(formValues.radio)];
+      } else {
+        value = Object.keys(formValues).filter((option) => formValues[option]);
+      }
+      onConfirm?.(value);
     },
   });
 
@@ -93,7 +114,7 @@ function MenuButton({
         {...props}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        aria-controls='menu-popover'
+        aria-controls="menu-popover"
       >
         <span className="flex items-center gap-2">
           {title} <VscSettings size={24} />
@@ -135,15 +156,27 @@ function MenuButton({
                       className="flex items-center whitespace-nowrap"
                     >
                       <label htmlFor={`checkbox-${key}`}>
-                        <Checkbox
-                          id={`checkbox-${key}`}
-                          name={key}
-                          value={option.value}
-                          checked={formValues[key]}
-                          className="mr-4"
-                          size="sm"
-                          onChange={handleChange}
-                        />
+                        {inputType === MenuButtonInputType.CHECKBOX ? (
+                          <Checkbox
+                            id={`checkbox-${key}`}
+                            name={key}
+                            value={option.value}
+                            checked={!!formValues[key]}
+                            className="mr-4"
+                            size="sm"
+                            onChange={handleChange}
+                          />
+                        ) : (
+                          <Radio
+                            id={`checkbox-${key}`}
+                            name="radio"
+                            onChange={handleChange}
+                            checked={formValues.radio === option.value}
+                            className="mr-4"
+                            value={option.value}
+                            size="sm"
+                          />
+                        )}
                         <span className="font-medium text-primary">
                           {option.label}
                         </span>

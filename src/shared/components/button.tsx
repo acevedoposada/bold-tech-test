@@ -9,9 +9,16 @@ type ButtonProps = CommonProps &
     type?: 'submit' | 'reset' | 'button';
   };
 
-function Button({ children, className, fullWidth, type = 'button', ...props }: ButtonProps) {
+function Button({
+  children,
+  className,
+  fullWidth,
+  type = 'button',
+  ...props
+}: ButtonProps) {
   return (
     <button
+      type={type}
       className={cn(
         'px-8 py-3 text-lg transition-colors font-medium text-white rounded-full cursor-pointer bg-secondary hover:not-disabled:bg-secondary-600 disabled:opacity-70 disabled:cursor-default',
         {

@@ -86,11 +86,15 @@ function Tooltip({ children, title, clickable }: TooltipProps) {
 
   useEffect(() => {
     if (isVisible) {
-      calculatePosition();
-      window.addEventListener('scroll', calculatePosition);
+      const id = requestAnimationFrame(calculatePosition);
+      const onScroll = () => requestAnimationFrame(calculatePosition);
+      window.addEventListener('scroll', onScroll);
+      return () => {
+        cancelAnimationFrame(id);
+        window.removeEventListener('scroll', onScroll);
+      };
     }
-    return () => window.removeEventListener('scroll', calculatePosition);
-  }, [isVisible]);
+  }, [isVisible, calculatePosition]);
 
   const handlemouseEnter = () => setIsVisible(true);
   const handlemouseLeave = () => setIsVisible(false);

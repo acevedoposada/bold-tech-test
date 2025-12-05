@@ -13,7 +13,7 @@ function InitializeServices() {
       await fetchMovements();
       setFirstLoadFalsy();
     })();
-  }, []);
+  }, [fetchMovements, setFirstLoadFalsy]);
 
   return null;
 }

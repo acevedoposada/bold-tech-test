@@ -28,7 +28,7 @@ describe('apiInstance interceptors', () => {
 
   it('should register response interceptor handler', () => {
     const handlers: Function[] = [];
-    
+
     (axios.create as jest.Mock).mockReturnValue({
       interceptors: {
         response: {
@@ -50,7 +50,7 @@ describe('apiInstance interceptors', () => {
 
   it('should return response.data from interceptor', () => {
     const handlers: Function[] = [];
-    
+
     (axios.create as jest.Mock).mockReturnValue({
       interceptors: {
         response: {
@@ -82,7 +82,7 @@ describe('apiInstance interceptors', () => {
 
   it('should preserve various data types from response', () => {
     const handlers: Function[] = [];
-    
+
     (axios.create as jest.Mock).mockReturnValue({
       interceptors: {
         response: {
@@ -104,7 +104,10 @@ describe('apiInstance interceptors', () => {
       { data: 'string', expected: 'string' },
       { data: 123, expected: 123 },
       { data: [1, 2, 3], expected: [1, 2, 3] },
-      { data: { nested: { value: true } }, expected: { nested: { value: true } } },
+      {
+        data: { nested: { value: true } },
+        expected: { nested: { value: true } },
+      },
       { data: null, expected: null },
       { data: undefined, expected: undefined },
     ];

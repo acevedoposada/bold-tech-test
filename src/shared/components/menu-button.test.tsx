@@ -38,7 +38,7 @@ describe('Menu button component', () => {
     const btn = screen.getByTestId('menu-btn');
     await act(() => {
       fireEvent.click(btn);
-    })
+    });
     const popover = screen.getByTestId('popover');
     expect(popover).toBeInTheDocument();
   });
@@ -60,7 +60,7 @@ describe('Menu button component', () => {
       const btn = screen.getByTestId('menu-btn');
       await act(() => {
         fireEvent.click(btn);
-      })
+      });
 
       const popover = screen.getByTestId('popover');
       expect(popover).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('Menu button component', () => {
       const closeBtn = screen.getByTestId('close-btn');
       await act(() => {
         fireEvent.click(closeBtn);
-      })
+      });
 
       if (hasOnClose) expect(closeFn).toHaveBeenCalled();
 
@@ -89,9 +89,10 @@ describe('Menu button component', () => {
         'data-testid': 'menu-btn',
         title: 'Filtrar',
         values: MOCK_VALUES,
+        checkedDefalt: MOCK_VALUES[2].value,
         ...(hasOnConfirm && { onConfirm: confirmFn }),
       };
-      render(<MenuButton {...props} />);
+      render(<MenuButton inputType="radio" {...props} />);
 
       const btn = screen.getByTestId('menu-btn');
       await act(() => {

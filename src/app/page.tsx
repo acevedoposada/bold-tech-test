@@ -22,7 +22,7 @@ export default function Home() {
     tabs,
     filteredMovements,
     paginatedData,
-    filters: selectedFilters,
+    selectedFilter,
     selectedMovement,
     notFoundMessage: { icon: NotFoundIcon, message: notFoundMessage },
     currentPage,
@@ -37,16 +37,21 @@ export default function Home() {
     <>
       <section className="container grid min-h-full gap-4 py-8 lg:py-14 grid-rows-[auto_1fr]">
         <section className="grid gap-4 lg:grid-cols-3">
-          <SummaryCard selectedTab={selectedTab} tabText={tabText} />
+          <SummaryCard
+            selectedTab={selectedTab}
+            tabText={tabText}
+            movements={filteredMovements}
+          />
           <aside className="grid gap-4 lg:col-span-2 grid-rows-[auto_1fr]">
             <Tabs value={selectedTab} tabs={tabs} onChange={handleTabChange} />
             <div className="flex items-start justify-end">
               <MenuButton
                 title="Filtrar"
                 values={filters}
-                defaultChecks={selectedFilters}
+                checkedDefalt={selectedFilter}
                 buttonLabel="Aplicar"
                 onConfirm={handleConfirmFilters}
+                inputType="radio"
               />
             </div>
           </aside>

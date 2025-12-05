@@ -3,16 +3,17 @@ import { create } from 'zustand';
 
 import { Transaction } from '../types/movements';
 import { fetchMovementsEffect } from './effect/movements.effect';
+import { SalesType } from '../constants/financials';
 
 interface MovementsState {
   loading: boolean;
   page: number;
   movements: Transaction[];
-  filters: string[];
+  selectedFilter: string;
   timeFilter: number;
   fetchMovements: () => void;
   changePage: (page: number) => void;
-  applyFilters: (filters: string[]) => void;
+  applyFilter: (filters: string) => void;
   applyTimeFilter: (value: number) => void;
 }
 
@@ -22,7 +23,7 @@ export const useMovementsStore = create<MovementsState>()(
       loading: true,
       page: 1,
       movements: [],
-      filters: [],
+      selectedFilter: SalesType.ALL,
       timeFilter: 2,
       setLoading(value: boolean) {
         set((state) => ({ ...state, loading: value }));
@@ -36,8 +37,8 @@ export const useMovementsStore = create<MovementsState>()(
           movements: result.data || [],
         }));
       },
-      applyFilters(filters: string[]) {
-        set((state) => ({ ...state, filters }));
+      applyFilter(selectedFilter: string) {
+        set((state) => ({ ...state, selectedFilter }));
       },
       applyTimeFilter(value: number) {
         set((state) => ({ ...state, timeFilter: value }));

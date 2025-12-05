@@ -41,38 +41,46 @@ function Pagination({
     };
 
   return (
-    <nav className="flex gap-2" aria-label='Paginación'>
-      <button
-        className="pagination__control text-primary"
-        onClick={handleArrowClick(DirectionButton.PREV)}
-        disabled={currentPage === 1}
-        aria-label='Página anterior'
-      >
-        <FaChevronLeft className="-ml-0.5" />
-      </button>
-      {pages.map((page, idx) => (
+    <nav
+      className="flex flex-col items-center gap-2 lg:flex-row-reverse"
+      aria-label="Paginación"
+    >
+      <div className="flex gap-2">
         <button
-          key={`${page}-${idx.toString(16)}`}
-          onClick={handleBulletClick(page)}
-          className={cn('pagination__control', {
-            'hover:bg-transparent! cursor-default!': page === DOTS_SPAN,
-            pagination__control__bullet: page !== DOTS_SPAN,
-            'pagination__control--active': page === currentPage,
-          })}
-          aria-label={`Página ${page}`}
-          aria-current={page === currentPage ? 'page' : undefined}
+          className="pagination__control text-primary"
+          onClick={handleArrowClick(DirectionButton.PREV)}
+          disabled={currentPage === 1}
+          aria-label="Página anterior"
         >
-          {page}
+          <FaChevronLeft className="-ml-0.5" />
         </button>
-      ))}
-      <button
-        className="pagination__control text-primary"
-        onClick={handleArrowClick(DirectionButton.NEXT)}
-        disabled={currentPage === Math.ceil(itemsCount / DEFAULT_PAGE_SIZE)}
-        aria-label='Página siguiente'
-      >
-        <FaChevronRight className="-mr-0.5" />
-      </button>
+        {pages.map((page, idx) => (
+          <button
+            key={`${page}-${idx.toString(16)}`}
+            onClick={handleBulletClick(page)}
+            className={cn('pagination__control', {
+              'hover:bg-transparent! cursor-default!': page === DOTS_SPAN,
+              pagination__control__bullet: page !== DOTS_SPAN,
+              'pagination__control--active': page === currentPage,
+            })}
+            aria-label={`Página ${page}`}
+            aria-current={page === currentPage ? 'page' : undefined}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          className="pagination__control text-primary"
+          onClick={handleArrowClick(DirectionButton.NEXT)}
+          disabled={currentPage === Math.ceil(itemsCount / DEFAULT_PAGE_SIZE)}
+          aria-label="Página siguiente"
+        >
+          <FaChevronRight className="-mr-0.5" />
+        </button>
+      </div>
+      <p className="text-sm text-brand-gray-dark/60">
+        Mostrando {DEFAULT_PAGE_SIZE} de {itemsCount} elementos
+      </p>
     </nav>
   );
 }

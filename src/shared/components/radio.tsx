@@ -1,46 +1,38 @@
-import {
-  ChangeEvent,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-  useState,
-} from 'react';
-import { IoCheckbox, IoSquareOutline } from 'react-icons/io5';
+import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes } from 'react';
+import { IoIosRadioButtonOff, IoIosRadioButtonOn } from 'react-icons/io';
 
 import { cn } from '../lib/utils';
 import { motion } from 'motion/react';
 
-enum CheckboxSizes {
+enum RadioSizes {
   SM = 'sm',
   DEFAULT = 'default',
 }
 
-interface CheckboxProps extends Omit<
+interface RadioProps extends Omit<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   'size'
 > {
-  size?: `${CheckboxSizes}`;
+  size?: `${RadioSizes}`;
 }
 
-const MotionCheckboxIcon = motion.create(IoCheckbox);
+const MotionRadioOnIcon = motion.create(IoIosRadioButtonOn);
 
-const checkedAnimations = {
+const radioAnimations = {
   unchecked: { scale: 0, opacity: 0 },
   checked: { scale: 1, opacity: 1 },
 };
 
-function Checkbox({
+function Radio({
   className,
   value,
-  size = CheckboxSizes.DEFAULT,
+  size = RadioSizes.DEFAULT,
   checked,
   onChange,
   ...props
-}: CheckboxProps) {
-  const [isChecked, setIsChecked] = useState(checked);
-
+}: RadioProps) {
   const handleClick = (event: ChangeEvent<HTMLInputElement>) => {
     onChange?.(event);
-    setIsChecked(event.target.checked);
   };
 
   return (
@@ -48,14 +40,14 @@ function Checkbox({
       className={cn(
         'box-border relative inline-flex items-center justify-center p-2 m-0 align-middle bg-transparent border-0 rounded-full outline-none appearance-none cursor-pointer select-none text-primary',
         {
-          'h-10 w-10': size === CheckboxSizes.DEFAULT,
-          'h-6 w-6': size === CheckboxSizes.SM,
+          'h-10 w-10': size === RadioSizes.DEFAULT,
+          'h-6 w-6': size === RadioSizes.SM,
         },
         className,
       )}
     >
       <input
-        type="checkbox"
+        type="radio"
         className="absolute top-0 left-0 w-full h-full p-0 m-0 z-1 cursor-[inherit] opacity-0"
         value={value}
         onChange={handleClick}
@@ -63,11 +55,11 @@ function Checkbox({
         {...props}
       />
       <span className="grid">
-        <IoSquareOutline size={28} className="[grid-area:1/1]" />
-        <MotionCheckboxIcon
-          variants={checkedAnimations}
+        <IoIosRadioButtonOff size={28} className="[grid-area:1/1]" />
+        <MotionRadioOnIcon
+          variants={radioAnimations}
           initial="unchecked"
-          animate={isChecked ? 'checked' : 'unchecked'}
+          animate={checked ? 'checked' : 'unchecked'}
           size={28}
           className="[grid-area:1/1]"
         />
@@ -76,4 +68,4 @@ function Checkbox({
   );
 }
 
-export default Checkbox;
+export default Radio;

@@ -15,10 +15,10 @@ function Tabs({ value, tabs, onChange }: TabsProps) {
       data-testid="tabs"
       className="flex w-full p-2 bg-white h-fit rounded-xl"
       role="tablist"
-      aria-label='Selección de pestañas'
+      aria-label="Selección de pestañas"
     >
       {tabs.map((tab, idx) => {
-        const isSelected = value === idx
+        const isSelected = value === idx;
         return (
           <motion.button
             key={idx}
@@ -38,7 +38,7 @@ function Tabs({ value, tabs, onChange }: TabsProps) {
               />
             )}
           </motion.button>
-        )
+        );
       })}
     </motion.div>
   );

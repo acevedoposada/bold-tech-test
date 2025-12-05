@@ -18,9 +18,9 @@ const useMovementsPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const movements = useMovementsStore((state) => state.movements);
-  const filters = useMovementsStore((state) => state.filters);
+  const selectedFilter = useMovementsStore((state) => state.selectedFilter);
   const selectedTab = useMovementsStore((state) => state.timeFilter);
-  const applyFilters = useMovementsStore((state) => state.applyFilters);
+  const applyFilter = useMovementsStore((state) => state.applyFilter);
   const applyTimeFilter = useMovementsStore((state) => state.applyTimeFilter);
 
   const tabs = useMemo(
@@ -30,11 +30,11 @@ const useMovementsPage = () => {
 
   const filteredMovements = useMemo(() => {
     let data: Transaction[] = [];
-    if (filters.includes(SalesType.ALL) || !filters.length) {
+    if (selectedFilter === SalesType.ALL || !selectedFilter) {
       data = movements;
     } else {
-      data = movements.filter((movement) =>
-        filters.includes(movement.salesType),
+      data = movements.filter(
+        (movement) => movement.salesType === selectedFilter,
       );
     }
     const term = searchTerm.trim().toLowerCase();
@@ -45,7 +45,7 @@ const useMovementsPage = () => {
         movement.franchise?.toLocaleLowerCase().includes(term) ||
         movement.transactionReference.toString().includes(term),
     );
-  }, [filters, movements, searchTerm]);
+  }, [selectedFilter, movements, searchTerm]);
 
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * DEFAULT_PAGE_SIZE;
@@ -57,7 +57,7 @@ const useMovementsPage = () => {
     if (
       filteredMovements.length === 0 &&
       !searchTerm.trim().length &&
-      !filters.length
+      !selectedFilter
     ) {
       return {
         icon: BsEmojiTear,
@@ -69,9 +69,9 @@ const useMovementsPage = () => {
       icon: LuSearchX,
       message: 'No encontramos nada que coincida con tus criterios de búsqueda',
     };
-  }, [searchTerm, filteredMovements]);
+  }, [filteredMovements, searchTerm, selectedFilter]);
 
-  const tabText = useMemo(() => tabs[selectedTab], [selectedTab]);
+  const tabText = useMemo(() => tabs[selectedTab], [selectedTab, tabs]);
 
   const handleSearchChange = useDebounce(
     (event: ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value),
@@ -82,7 +82,7 @@ const useMovementsPage = () => {
   };
 
   const handleConfirmFilters = (filters: string[]) => {
-    applyFilters(filters);
+    if (filters.length > 0) applyFilter(filters[0]);
   };
 
   const handleRowClicked = (element: Transaction) => {
@@ -102,7 +102,7 @@ const useMovementsPage = () => {
     filteredMovements,
     paginatedData,
     movements,
-    filters,
+    selectedFilter,
     selectedMovement,
     notFoundMessage,
     currentPage,

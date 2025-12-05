@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { DEFAULT_PAGE_SIZE, DOTS_SPAN } from '../constants/common';
 
 interface Params {

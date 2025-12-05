@@ -8,12 +8,12 @@ Esta prueba técnica fue desarrollada para la compañía **Bold.co** aplicando a
 
 Incluye:
 
-* Componentes reutilizables y accesibles
-* Manejo eficiente del estado local
-* **Animaciones fluidas** con un enfoque en **mejorar el rendimiento visual**
-* Diseño con CSS optimizado
-* Pruebas unitarias con Jest
-* Eslint + Prettier para mantener calidad de código
+- Componentes reutilizables y accesibles
+- Manejo eficiente del estado local
+- **Animaciones fluidas** con un enfoque en **mejorar el rendimiento visual**
+- Diseño con CSS optimizado
+- Pruebas unitarias con Jest
+- Eslint + Prettier para mantener calidad de código
 
 ---
 
@@ -52,10 +52,10 @@ Durante el desarrollo se aplicaron optimizaciones de **renderizado**, minimizand
 
 Estas mejoras incluyeron:
 
-* `useMemo` y `useCallback` en puntos críticos
-* Lazy loading de recursos
-* Animaciones con costos reducidos evitando layout thrashing
-* Paginación de contenidos extensos
+- `useMemo` y `useCallback` en puntos críticos
+- Lazy loading de recursos
+- Animaciones con costos reducidos evitando layout thrashing
+- Paginación de contenidos extensos
 
 Todo esto para garantizar una **UI dinámica y rápida** incluso en dispositivos con capacidades limitadas.
 
@@ -63,9 +63,14 @@ Todo esto para garantizar una **UI dinámica y rápida** incluso en dispositivos
 
 ## 🧠 Stack Técnico
 
-* **Next.js** (App Router)
-* **React** + Hooks
-* **Tailwind CSS v4** + CSS
-* **Jest** para pruebas unitarias
-* **ESLint + Prettier** para estilo y calidad de código
+- **Next.js** (App Router)
+- **React** + Hooks
+- **Tailwind CSS v4** + CSS
+- **Jest** para pruebas unitarias
+- **ESLint + Prettier** para estilo y calidad de código
 
+---
+
+## 🤓 Una pequeña mejora de UX
+
+En el transcurso del desarrollo de la prueba, evidencie que al hacer uso de los filtros, al ser un checkbox, hacia que el usuario pudiera redundar en sus busquedas, por ende desarrollé un componente Radio y lo integré al componente de los filtros, haciendo que para el usuario sea mas fácil la utilización de los filtros propuestos en la prueba. Adicional a esto, cree una carpeta modules en los cuales extraigo y monto allí toda la lógica y/o componentes especificos para cada página evitando que se sobrecarguen el fichero app y dejandolo centralizado unicamente para contener layouts y páginas stateless

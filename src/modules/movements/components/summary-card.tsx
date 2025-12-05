@@ -7,12 +7,13 @@ import Card, { CardHeader, CardBody } from '@/shared/components/card';
 import Tooltip from '@/shared/components/tooltip';
 import dayjs from '@lib/dayjs';
 import AnimatedLabel from '@/shared/components/animated-label';
-import useMovementsPage from '../hooks/movements.hook';
 import { filterTimeRanges } from '@/shared/constants/filters';
+import { Transaction } from '@/shared/types/movements';
 
 interface SummaryCardProps {
   selectedTab: number;
   tabText: string;
+  movements: Transaction[];
 }
 
 const labels = [
@@ -26,8 +27,11 @@ const ranges = [
   filterTimeRanges.month,
 ];
 
-function SummaryCard({ selectedTab = 0, tabText }: SummaryCardProps) {
-  const { movements } = useMovementsPage();
+function SummaryCard({
+  selectedTab = 0,
+  tabText,
+  movements,
+}: SummaryCardProps) {
   const summary = useMemo(() => {
     const [startAt, endAt] = ranges[selectedTab] || [];
     if (!startAt || !endAt) return 0;

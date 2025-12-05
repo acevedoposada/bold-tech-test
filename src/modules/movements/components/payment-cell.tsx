@@ -19,7 +19,7 @@ function PaymentCell({
 }: PaymentCellProps) {
   const icon = useMemo(
     () => iconsMapping[(franchise || method) as keyof typeof iconsMapping],
-    [method],
+    [franchise, method],
   );
   return (
     <p className={cn('flex items-center gap-2 text-sm font-medium', className)}>
