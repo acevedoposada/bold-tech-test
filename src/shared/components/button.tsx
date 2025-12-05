@@ -9,7 +9,7 @@ type ButtonProps = CommonProps &
     type?: 'submit' | 'reset' | 'button';
   };
 
-function Button({ children, className, fullWidth, ...props }: ButtonProps) {
+function Button({ children, className, fullWidth, type = 'button', ...props }: ButtonProps) {
   return (
     <button
       className={cn(

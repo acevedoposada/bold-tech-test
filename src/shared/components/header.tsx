@@ -66,6 +66,9 @@ function Header() {
               data-testid="burger-menu"
               className="grid w-10 h-10 cursor-pointer place-content-center lg:hidden"
               onClick={toggleOpen}
+              aria-expanded={isOpen}
+              aria-controls="main-menu"
+              aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
             >
               <motion.span
                 variants={iconVariantsAnimations}

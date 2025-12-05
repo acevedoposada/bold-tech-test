@@ -91,6 +91,9 @@ function MenuButton({
           className,
         )}
         {...props}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-controls='menu-popover'
       >
         <span className="flex items-center gap-2">
           {title} <VscSettings size={24} />
@@ -99,6 +102,10 @@ function MenuButton({
       <AnimatePresence>
         {isOpen && (
           <motion.section
+            id="menu-popover"
+            role="dialog"
+            aria-label={title}
+            tabIndex={-1}
             layoutId="popover"
             className="absolute top-0 right-0 z-10 bg-white rounded-lg shadow-lg w-72"
             data-testid="popover"

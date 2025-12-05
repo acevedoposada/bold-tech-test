@@ -41,11 +41,12 @@ function Pagination({
     };
 
   return (
-    <nav className="flex gap-2">
+    <nav className="flex gap-2" aria-label='Paginación'>
       <button
         className="pagination__control text-primary"
         onClick={handleArrowClick(DirectionButton.PREV)}
         disabled={currentPage === 1}
+        aria-label='Página anterior'
       >
         <FaChevronLeft className="-ml-0.5" />
       </button>
@@ -58,6 +59,8 @@ function Pagination({
             pagination__control__bullet: page !== DOTS_SPAN,
             'pagination__control--active': page === currentPage,
           })}
+          aria-label={`Página ${page}`}
+          aria-current={page === currentPage ? 'page' : undefined}
         >
           {page}
         </button>
@@ -66,6 +69,7 @@ function Pagination({
         className="pagination__control text-primary"
         onClick={handleArrowClick(DirectionButton.NEXT)}
         disabled={currentPage === Math.ceil(itemsCount / DEFAULT_PAGE_SIZE)}
+        aria-label='Página siguiente'
       >
         <FaChevronRight className="-mr-0.5" />
       </button>

@@ -113,6 +113,7 @@ function Tooltip({ children, title, clickable }: TooltipProps) {
       <AnimatePresence>
         {isVisible && (
           <motion.span
+            role="tooltip"
             ref={tooltipRef}
             className="fixed z-10 px-2 py-1 text-xs text-white rounded-sm pointer-events-none bg-brand-gray-dark"
             style={{ left: position.left, top: position.top }}

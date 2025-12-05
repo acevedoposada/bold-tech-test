@@ -36,7 +36,9 @@ describe('Menu button component', () => {
 
   it('Should be render popover if button is clicked', async () => {
     const btn = screen.getByTestId('menu-btn');
-    await fireEvent.click(btn);
+    await act(() => {
+      fireEvent.click(btn);
+    })
     const popover = screen.getByTestId('popover');
     expect(popover).toBeInTheDocument();
   });
@@ -56,13 +58,17 @@ describe('Menu button component', () => {
       };
       render(<MenuButton {...props} />);
       const btn = screen.getByTestId('menu-btn');
-      fireEvent.click(btn);
+      await act(() => {
+        fireEvent.click(btn);
+      })
 
       const popover = screen.getByTestId('popover');
       expect(popover).toBeInTheDocument();
 
       const closeBtn = screen.getByTestId('close-btn');
-      fireEvent.click(closeBtn);
+      await act(() => {
+        fireEvent.click(closeBtn);
+      })
 
       if (hasOnClose) expect(closeFn).toHaveBeenCalled();
 

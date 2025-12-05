@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧪 Prueba Técnica – Bold.co
 
-## Getting Started
+![Bold Logo](./public/bold.svg)
 
-First, run the development server:
+## 🚀 Descripción General
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Esta prueba técnica fue desarrollada para la compañía **Bold.co** aplicando al cargo de **Frontend Engineer**. El objetivo principal fue demostrar experiencia en construcción de interfaces modernas utilizando **Next.js**, buenas prácticas de desarrollo, performance rendering y animaciones fluidas que aportan dinamismo a la experiencia de usuario.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Incluye:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Componentes reutilizables y accesibles
+* Manejo eficiente del estado local
+* **Animaciones fluidas** con un enfoque en **mejorar el rendimiento visual**
+* Diseño con CSS optimizado
+* Pruebas unitarias con Jest
+* Eslint + Prettier para mantener calidad de código
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🎨 ¿Por qué usar CSS puro?
 
-To learn more about Next.js, take a look at the following resources:
+En este proyecto utilizo **Tailwind CSS v4**, el cual **no es 100% compatible con preprocesadores** como SASS/SCSS.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Sin embargo, para mantener la granularidad y control visual en componentes particulares, opté también por **CSS puro** ya que:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✔️ Permite aislar estilos complejos sin afectar la generación automática de Tailwind
+✔️ Asegura compatibilidad total con el entorno de build
+✔️ Facilita la implementación de animaciones personalizadas sin restricciones
+✔️ Garantiza mayor estabilidad frente a actualizaciones de Tailwind
 
-## Deploy on Vercel
+El resultado es una **combinación flexible**: diseño rápido con utilidades y estilos refinados con CSS modular.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 💻 Comandos del Proyecto
+
+| Comando                | Descripción                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `npm run dev`          | Ejecuta el entorno de desarrollo de Next.js          |
+| `npm run build`        | Genera el build de producción                        |
+| `npm run start`        | Inicia el servidor en producción                     |
+| `npm run lint`         | Corre ESLint para validar la calidad del código      |
+| `npm run test`         | Ejecuta los tests unitarios con Jest                 |
+| `npm run format`       | Formatea el código usando Prettier                   |
+| `npm run format:check` | Verifica que el código esté formateado correctamente |
+
+---
+
+## ✨ Enfoque en rendimiento y experiencia
+
+Durante el desarrollo se aplicaron optimizaciones de **renderizado**, minimizando re-renders en componentes que manejan grandes listados e interacciones.
+
+Estas mejoras incluyeron:
+
+* `useMemo` y `useCallback` en puntos críticos
+* Lazy loading de recursos
+* Animaciones con costos reducidos evitando layout thrashing
+* Paginación de contenidos extensos
+
+Todo esto para garantizar una **UI dinámica y rápida** incluso en dispositivos con capacidades limitadas.
+
+---
+
+## 🧠 Stack Técnico
+
+* **Next.js** (App Router)
+* **React** + Hooks
+* **Tailwind CSS v4** + CSS
+* **Jest** para pruebas unitarias
+* **ESLint + Prettier** para estilo y calidad de código
+

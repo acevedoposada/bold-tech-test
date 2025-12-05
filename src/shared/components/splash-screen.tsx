@@ -21,6 +21,9 @@ function SplashScreen() {
             userSelect: 'none',
             transition: { delay: 1.3 },
           }}
+          role="status"
+          aria-live="polite"
+          aria-label="Cargando"
         >
           <motion.div
             className="grid logo-mask place-content-center bg-linear-to-t from-primary to-secondary"

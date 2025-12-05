@@ -50,8 +50,12 @@ function Drawer({
         <motion.div
           className="fixed top-0 left-0 z-40 grid w-full h-full"
           exit={{ pointerEvents: 'none', userSelect: 'none' }}
+          data-testid="drawer"
+          role="dialog"
+          aria-modal
         >
           <motion.div
+            data-testid="drawer-backdrop"
             onClick={closeWithBackdrop ? onClose : undefined}
             className={cn('[grid-area:1/1] backdrop-blur-sm bg-white/30', {
               'cursor-pointer': closeWithBackdrop,
@@ -67,6 +71,7 @@ function Drawer({
             <motion.button
               className="absolute top-0 right-0 p-6 cursor-pointer lg:p-8"
               onClick={onClose}
+              aria-label="Cerrar"
             >
               <IoClose className="w-6 h-6 lg:w-8 lg:h-8" />
             </motion.button>
