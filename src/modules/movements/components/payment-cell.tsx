@@ -8,15 +8,21 @@ interface PaymentCellProps {
   method: string;
   franchise?: string;
   reference: number;
+  className?: string;
 }
 
-function PaymentCell({ method, reference, franchise }: PaymentCellProps) {
+function PaymentCell({
+  method,
+  reference,
+  franchise,
+  className,
+}: PaymentCellProps) {
   const icon = useMemo(
     () => iconsMapping[(franchise || method) as keyof typeof iconsMapping],
     [method],
   );
   return (
-    <p className="flex items-center gap-2 text-sm">
+    <p className={cn('flex items-center gap-2 text-sm font-medium', className)}>
       <span className="block w-8 overflow-hidden max-w-32">
         <Image
           src={icon.img}

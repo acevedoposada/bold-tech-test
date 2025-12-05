@@ -12,6 +12,7 @@ import MovementsTable from '@/modules/movements/components/table';
 import SummaryCard from '@/modules/movements/components/summary-card';
 import AnimatedLabel from '@/shared/components/animated-label';
 import Drawer from '@/shared/components/drawer';
+import Voucher from '@/modules/movements/components/voucher';
 
 export default function Home() {
   const {
@@ -72,7 +73,7 @@ export default function Home() {
         </section>
       </section>
       <Drawer open={!!selectedMovement} onClose={handleCloseDrawer}>
-        Hola!?
+        {selectedMovement && <Voucher transaction={selectedMovement} />}
       </Drawer>
     </>
   );

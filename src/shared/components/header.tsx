@@ -88,14 +88,21 @@ function Header() {
           <nav className="pb-3 lg:pb-0">
             <ul className="flex flex-col lg:gap-12 lg:flex-row">
               <li className="grid">
-                <a href="#" className="w-full py-3 hover:opacity-80">
+                <a
+                  href="https://panel.bold.co/api/auth/login"
+                  target="_blank"
+                  className="w-full py-3 hover:opacity-80"
+                  rel="noopener noreferrer"
+                >
                   Mi negocio
                 </a>
               </li>
               <li className="grid">
                 <a
-                  href="#"
+                  href="https://boldco.kustomer.help/lang/es/"
+                  target="_blank"
                   className="flex items-center gap-2 py-3 hover:opacity-80"
+                  rel="noopener noreferrer"
                 >
                   Ayuda
                   <LuCircleHelp size={18} />
