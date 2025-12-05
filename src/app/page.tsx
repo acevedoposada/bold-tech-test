@@ -84,11 +84,13 @@ export default function Home() {
               </div>
             </div>
           </Card>
-          <Pagination
-            itemsCount={filteredMovements.length}
-            currentPage={currentPage}
-            onPageChange={handleChangePage}
-          />
+          <div className="grid w-full place-content-center lg:w-auto">
+            <Pagination
+              itemsCount={filteredMovements.length}
+              currentPage={currentPage}
+              onPageChange={handleChangePage}
+            />
+          </div>
         </section>
       </section>
       <Drawer open={!!selectedMovement} onClose={handleCloseDrawer}>
