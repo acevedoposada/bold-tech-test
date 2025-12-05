@@ -1,0 +1,9 @@
+{
+  "github": {
+    "checks": {
+      "pre-build": {
+        "command": "npm run test"
+      }
+    }
+  }
+}
