@@ -13,8 +13,7 @@ interface CheckboxProps extends Omit<DetailedHTMLProps<InputHTMLAttributes<HTMLI
   size?: `${CheckboxSizes}`
 }
 
-const MotionCheckboxIcon = motion(IoCheckbox)
-const MotionSquareIcon = motion(IoSquareOutline);
+const MotionCheckboxIcon = motion.create(IoCheckbox)
 
 const checkedAnimations = {
   unchecked: { scale: 0, opacity: 0 },
@@ -46,7 +45,7 @@ function Checkbox({ className, value, size = CheckboxSizes.DEFAULT, checked, onC
         {...props}
       />
       <span className="grid">
-        <MotionSquareIcon size={28} className='[grid-area:1/1]' />
+        <IoSquareOutline size={28} className='[grid-area:1/1]' />
         <MotionCheckboxIcon
           variants={checkedAnimations}
           initial="unchecked"
