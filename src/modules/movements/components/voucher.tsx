@@ -63,7 +63,6 @@ function Voucher({ transaction }: VoucherProps) {
       label: 'ID transacción Bold',
       value: <p className="font-bold">{transaction.id}</p>,
     },
-    { key: 'divider-top', type: 'divider' },
     ...(transaction.deduction
       ? [
           {
@@ -77,6 +76,7 @@ function Voucher({ transaction }: VoucherProps) {
           },
         ]
       : []),
+    { key: 'divider-top', type: 'divider' },
     {
       key: 'payment-method',
       label: 'Método de pago',
