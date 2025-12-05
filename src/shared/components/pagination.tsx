@@ -27,6 +27,8 @@ function Pagination({
     itemsCount,
   });
 
+  const itemsPerPage = itemsCount < DEFAULT_PAGE_SIZE ? itemsCount : DEFAULT_PAGE_SIZE;
+
   const handleBulletClick =
     (page: number | string) => (event: MouseEvent<Element>) => {
       if (typeof page === 'number') onPageChange?.(page, event);
@@ -79,7 +81,7 @@ function Pagination({
         </button>
       </div>
       <p className="text-sm text-brand-gray-dark/60">
-        Mostrando {DEFAULT_PAGE_SIZE} de {itemsCount} elementos
+        Mostrando {itemsPerPage} de {itemsCount} elementos
       </p>
     </nav>
   );

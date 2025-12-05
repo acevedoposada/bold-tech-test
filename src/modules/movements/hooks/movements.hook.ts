@@ -85,6 +85,8 @@ const useMovementsPage = () => {
     if (filters.length > 0) applyFilter(filters[0]);
   };
 
+  const handleRemoveFilter = () => applyFilter(SalesType.ALL);
+
   const handleRowClicked = (element: Transaction) => {
     setSelectedMovement(element);
   };
@@ -112,6 +114,7 @@ const useMovementsPage = () => {
     handleSearchChange,
     handleCloseDrawer,
     handleChangePage,
+    handleRemoveFilter,
   };
 };
 

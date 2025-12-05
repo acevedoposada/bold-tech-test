@@ -1,6 +1,5 @@
 'use client';
 import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react';
-import { VscSettings } from 'react-icons/vsc';
 import { IoClose } from 'react-icons/io5';
 import { useState } from 'react';
 import { useFormik } from 'formik';
@@ -8,6 +7,7 @@ import Button from './button';
 import { cn } from '../lib/utils';
 import Checkbox from './checkbox';
 import Radio from './radio';
+import { IconType } from 'react-icons';
 
 interface Value {
   label: string;
@@ -26,6 +26,7 @@ interface MenuButtonProps extends Omit<HTMLMotionProps<'button'>, 'values'> {
   buttonLabel?: string;
   checkedDefalt?: (string | number)[] | (string | number);
   inputType?: `${MenuButtonInputType}`;
+  icon?: IconType;
   onClose?: () => void;
   onConfirm?: (values: string[]) => void;
 }
@@ -36,6 +37,7 @@ function MenuButton({
   buttonLabel = 'Confirmar',
   checkedDefalt,
   inputType = MenuButtonInputType.CHECKBOX,
+  icon: Icon,
   onClose,
   onConfirm,
   className,
@@ -47,20 +49,20 @@ function MenuButton({
   const initialValues: Record<string, boolean | string> =
     inputType === MenuButtonInputType.CHECKBOX && Array.isArray(checkedDefalt)
       ? values.reduce<Record<string, boolean>>((acc, option) => {
-          const hasDefault = checkedDefalt?.find(
-            (value) => option.value === value,
-          );
-          acc[getKey(option.value)] =
-            !!hasDefault ||
-            (!checkedDefalt?.length && option.defaultChecked) ||
-            false;
-          return acc;
-        }, {})
+        const hasDefault = checkedDefalt?.find(
+          (value) => option.value === value,
+        );
+        acc[getKey(option.value)] =
+          !!hasDefault ||
+          (!checkedDefalt?.length && option.defaultChecked) ||
+          false;
+        return acc;
+      }, {})
       : {
-          radio: Array.isArray(checkedDefalt)
-            ? ''
-            : String(checkedDefalt) || '',
-        };
+        radio: Array.isArray(checkedDefalt)
+          ? ''
+          : String(checkedDefalt) || '',
+      };
 
   const {
     values: formValues,
@@ -117,7 +119,7 @@ function MenuButton({
         aria-controls="menu-popover"
       >
         <span className="flex items-center gap-2">
-          {title} <VscSettings size={24} />
+          {title} {Icon && <Icon size={24} />}
         </span>
       </motion.button>
       <AnimatePresence>

@@ -1,6 +1,7 @@
 'use client';
 
 import { IoSearchSharp } from 'react-icons/io5';
+import { VscSettings } from 'react-icons/vsc';
 
 import { filters } from '@/shared/constants/filters';
 import Card, { CardHeader } from '@/shared/components/card';
@@ -14,6 +15,7 @@ import AnimatedLabel from '@/shared/components/animated-label';
 import Drawer from '@/shared/components/drawer';
 import Voucher from '@/modules/movements/components/voucher';
 import Pagination from '@/shared/components/pagination';
+import CurrentFilter from '@/modules/movements/components/current-filter';
 
 export default function Home() {
   const {
@@ -32,10 +34,12 @@ export default function Home() {
     handleRowClicked,
     handleCloseDrawer,
     handleChangePage,
+    handleRemoveFilter,
   } = useMovementsPage();
+
   return (
     <>
-      <section className="container grid min-h-full gap-4 py-8 lg:py-14 grid-rows-[auto_1fr]">
+      <section className="container grid min-h-full gap-10 lg:gap-4 py-8 lg:py-14 grid-rows-[auto_1fr]">
         <section className="grid gap-4 lg:grid-cols-3">
           <SummaryCard
             selectedTab={selectedTab}
@@ -44,15 +48,22 @@ export default function Home() {
           />
           <aside className="grid gap-4 lg:col-span-2 grid-rows-[auto_1fr]">
             <Tabs value={selectedTab} tabs={tabs} onChange={handleTabChange} />
-            <div className="flex items-start justify-end">
-              <MenuButton
-                title="Filtrar"
-                values={filters}
-                checkedDefalt={selectedFilter}
-                buttonLabel="Aplicar"
-                onConfirm={handleConfirmFilters}
-                inputType="radio"
-              />
+            <div>
+              <div className="flex items-center justify-end gap-6">
+                <CurrentFilter
+                  currentFilter={selectedFilter}
+                  onRemoveFilter={handleRemoveFilter}
+                />
+                <MenuButton
+                  title="Filtrar"
+                  values={filters}
+                  checkedDefalt={selectedFilter}
+                  buttonLabel="Aplicar"
+                  onConfirm={handleConfirmFilters}
+                  inputType="radio"
+                  icon={VscSettings}
+                />
+              </div>
             </div>
           </aside>
         </section>
