@@ -22,7 +22,7 @@ const labels = {
     REJECTED: 'Cobro no realizado',
   },
   salesType: {
-    TERMINAL: 'Datófono',
+    TERMINAL: 'Datáfono',
     PAYMENT_LINK: 'Link de pagos',
   },
 };
